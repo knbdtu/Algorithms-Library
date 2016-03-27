@@ -43,7 +43,7 @@ bool comp2(const pair<int,int> &A,const pair<int,int> &B)
 	return ang1<ang2;
 }
 
-bool orientation(const pair<int,int> &A,const pair<int,int> &B,const pair<int,int> &C)
+int orientation(const pair<int,int> &A,const pair<int,int> &B,const pair<int,int> &C)
 {
 	int val=(B.second-A.second)*(C.first-B.first)-(C.second-B.second)*(B.first-A.first);
 	if(val==0)
