@@ -41,8 +41,6 @@ LL modPow(LL A,LL B,LL C)
     return X%C;
 }
 
-//474848249
-
 LL TonelliShanks(LL N,LL P)
 {
     LL S=0;
