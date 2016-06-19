@@ -25,8 +25,6 @@ template<typename T>T absll(T X)
         return X;
 }
 
-int PT[10];
-
 struct P
 {
     int first;
@@ -38,7 +36,7 @@ struct P
         second=0;
     }
     
-}pre[1001][1001][11][11];
+}pre[11][11][1004][1004];
 
 int dp[1001][1001];
 int A[1000][1000];
@@ -60,30 +58,30 @@ P get_max(P C,P D)
 
 void TwoDimensionSparseTable(int N,int M)
 {
-    for(int i=0;PT[i]<=N;i++)
+    for(int i=0;(1<<i)<=N;i++)
     {
-        for(int j=0;PT[j]<=M;j++)
+        for(int j=0;(1<<j)<=M;j++)
         {
-            for(int x=0;x+PT[i]-1<N;x++)
+            for(int x=0;x+(1<<i)-1<N;x++)
             {
-                for(int y=0;y+PT[j]-1<M;y++)
+                for(int y=0;y+(1<<j)-1<M;y++)
                 {
                     if(i==0&&j==0)
                     {
-                        pre[x][y][i][j].first=x;
-                        pre[x][y][i][j].second=y;
+                        pre[i][j][x][y].first=x;
+                        pre[i][j][x][y].second=y;
                     }
                     else if(i==0)
                     {
-                        pre[x][y][i][j]=get_max(pre[x][y][i][j-1],pre[x][y+PT[j-1]][i][j-1]);
+                        pre[i][j][x][y]=get_max(pre[i][j-1][x][y],pre[i][j-1][x][y+(1<<(j-1))]);
                     }
                     else if(j==0)
                     {
-                        pre[x][y][i][j]=get_max(pre[x][y][i-1][j],pre[x+PT[i-1]][y][i-1][j]);
+                        pre[i][j][x][y]=get_max(pre[i-1][j][x][y],pre[i-1][j][x+(1<<(i-1))][y]);
                     }
                     else
                     {
-                        pre[x][y][i][j]=get_max(get_max(pre[x][y][i-1][j-1],pre[x+PT[i-1]][y][i-1][j-1]),get_max(pre[x][y+PT[j-1]][i-1][j-1],pre[x+PT[i-1]][y+PT[j-1]][i-1][j-1]));
+                        pre[i][j][x][y]=get_max(get_max(pre[i-1][j-1][x][y],pre[i-1][j-1][x+(1<<(i-1))][y]),get_max(pre[i-1][j-1][x][y+(1<<(j-1))],pre[i-1][j-1][x+(1<<(i-1))][y+(1<<(j-1))]));
                     }
                 }
             }
@@ -93,8 +91,8 @@ void TwoDimensionSparseTable(int N,int M)
 
 P get_range_max_query(int X,int Y,int X1,int Y1)
 {
-    int K=log(X1-X+1);
-    int L=log(Y1-Y+1);
-    P sol=get_max(get_max(pre[X][Y][K][L],pre[X1-PT[K]+1][Y][K][L]),get_max(pre[X][Y1-PT[L]+1][K][L],pre[X1-PT[K]+1][Y1-PT[L]+1][K][L]));
+    int K=31- __builtin_clz(X1-X+1);
+    int L=31- __builtin_clz(Y1-Y+1);
+    P sol=get_max(get_max(pre[K][L][X][Y],pre[K][L][X1-(1<<K)+1][Y]),get_max(pre[K][L][X][Y1-(1<<L)+1],pre[K][L][X1-(1<<K)+1][Y1-(1<<L)+1]));
     return sol;
 }
