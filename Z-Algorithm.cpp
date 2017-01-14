@@ -21,60 +21,6 @@ template<typename T>T absll(T X)
         return X;
 }
 
-void swap_row(vector<vector<int> > &V,int row1,int row2,int N,int M)
-{
-	for(int i=0;i<M;i++)
-	{
-		int temp=V[row1][i];
-		V[row1][i]=V[row2][i];
-		V[row2][i]=temp;
-	}
-}
-
-int MatrixRank(vector<vector<int> > &V,int N,int M)
-{
-	int r,c;
-	
-	for(r=0;r<M;r++)
-	{
-		if(V[r][r])
-		{
-			for(c=0;c<N;c++)
-			{
-				if(c!=r)
-				{
-					float ratio=(float)V[c][r]/(float)V[r][r];
-					for(int i=0;i<M;i++)
-					{
-						V[c][i]-=ratio*V[r][i];
-					}
-				}
-			}
-		}
-		else
-		{
-			for(c=r+1;c<N;c++)
-			{
-				if(V[c][r])
-				{
-					swap_row(V,r,c,N,M);
-					break;
-				}
-			}
-			
-			if(c==N)
-			{
-				--M;
-				for(c=0;c<N;c++)
-				{
-					V[c][r]=V[c][M];
-				}
-			}
-			--r;
-		}
-	}
-	return M;
-}
 vector<int> ZAlgorithm(string str,int N)
 {
 	int L=0,R=0;
