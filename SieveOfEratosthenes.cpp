@@ -39,12 +39,11 @@ LL modPow(LL A,LL B,LL C)
 
 vector<int> primes;
 vector<int> mprimes(MAXN+1,0);
-vector<int> smallestPrime(MAXN+1,0);
 
 void sieve()
 {
 	mprimes[0]=mprimes[1]=1;
-	smallestPrime[2]=2;
+	
 	for(int j=2*2;j<=MAXN;j+=2)
 	{
 		mprimes[j]=1;
@@ -54,11 +53,9 @@ void sieve()
 	{
 		if(!mprimes[i])
 		{
-			smallestPrime[i]=i;
 			for(int j=i*i;j<=MAXN;j+=i)
 			{
 				mprimes[j]=1;
-				smallestPrime[j]=i;
 			}
 		}
 	}
@@ -68,7 +65,6 @@ void sieve()
 		if(!mprimes[i])
 		{
 			primes.pb(i);
-			smallestPrime[i]=i;
 			//cout<<i<<" ";
 		}
 	}	

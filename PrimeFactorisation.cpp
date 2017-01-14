@@ -4,26 +4,41 @@ using namespace std;
 #define mp make_pair
 #define pb push_back
 #define mt make_tuple
-#define LD double
+#define LD long double
 #define gc getchar_unlocked
 #define pc putchar_unlocked
-#define MOD 1000000007LL
-#define MAXN 10000008
-#define LIM 10000000
-#define bitcount __builtin_popcount
+#define MOD 1000000007
+#define MAXN 2*100005
+#define bitcount _builtin_popcount
 #define INF 2000000000
 #define EPS 1e-9
-#define PI 3.14159265359
-#define DEBUG 1
-#define read(X) scanf("%lld",&X)
-#define write(X) printf("%lld\n",&X)
- 
+
 template<typename T>T absll(T X)
 {
     if(X<0)
         return -1*X;
     else
         return X;
+}
+
+vector<int> factors[1053];
+vector<int> primes;
+vector<int> mprimes(1053,0);
+LL N,M,L,R;
+
+LL modPow(LL A,LL B,LL C)
+{
+	LL X=1LL;
+	while(B)
+	{
+		if(B&1)
+		{
+			X=(X*A)%C;
+		}
+		A=(A*A)%C;
+		B/=2LL;
+	}
+	return X%C;
 }
 
 LL power(LL A,LL B)
@@ -41,49 +56,61 @@ LL power(LL A,LL B)
 	return X;
 }
 
-LL lowerBaseLimit(LL N, LL E)
+void sieve()
 {
-	LL low=2LL;
-	LL high=1000000000000LL;
-
-	while(low<=high)
+	primes.pb(2);
+	for(int i=4;i<1053;i+=2)
 	{
-		LL mid=(low+high)/2LL;
-		if((N-power(mid,E))>=0 && (N-power(mid+1,E))<=0)
+		mprimes[i]=1;
+	}
+	
+	for(int i=3;i<1053;i+=2)
+	{
+		if(!mprimes[i])
 		{
-			return mid;
-		}
-
-		else if((N-power(mid,E))>=0 && (N-power(mid+1,E))>=0)
-		{
-			low=mid;
-		}
-		else
-		{
-			high=mid;
+			primes.pb(i);
+			for(int j=2*i;j<1053;j+=i)
+			{
+				mprimes[j]=1;
+			}
 		}
 	}
-	return mid;
 }
 
-int main()
+void primeFactorisation()
 {
-    //std::clock_t start;
-    //double duration;
-    //start = std::clock();
-    //freopen("input.in","r",stdin);//redirects standard input
-    //freopen("output.out","w",stdout);//redirects standard output
-    //cout<<"yo\n";
-    int T;
-    scanf("%d",&T);
-    while(T--)
-    {
-        LL N;
-        scanf("%lld",&N);
-        LL sol=0LL;
-        printf("\n%lld\n",sol);
-    }
-    //duration=(clock()-start)/(double)CLOCKS_PER_SEC;
-    //printf("\n\nDuration :- %0.9lf s",duration);
-    return 0;
-} 
+	int cnt=0;
+	int flag=true;
+	for(int i=2;i<1053;i++)
+	{
+		int number=i;
+		while(number>1)
+		{
+			
+			for(int j=0;j<primes.size();j++)
+			{
+				int product=1;
+				cnt=0;
+				while(number%primes[j]==0)
+				{
+					number/=primes[j];
+					++cnt;
+				}
+				if(cnt>0)
+				{
+					factors[i].pb(power(primes[j],cnt));
+				}
+				if(number==1)
+				{
+					flag=false;
+					break;
+				}
+			}
+			if(flag==false)
+			{
+				flag=true;
+				break;
+			}
+		}
+	}
+}
