@@ -77,40 +77,27 @@ void sieve()
 	}
 }
 
-void primeFactorisation()
+void primeFactorisation(LL number)
 {
-	int cnt=0;
-	int flag=true;
-	for(int i=2;i<1053;i++)
+
+	for(int j=0;j<primes.size();j++)
 	{
-		int number=i;
-		while(number>1)
+		int product=1;
+		cnt=0;
+		while(number%primes[j]==0)
 		{
-			
-			for(int j=0;j<primes.size();j++)
-			{
-				int product=1;
-				cnt=0;
-				while(number%primes[j]==0)
-				{
-					number/=primes[j];
-					++cnt;
-				}
-				if(cnt>0)
-				{
-					factors[i].pb(power(primes[j],cnt));
-				}
-				if(number==1)
-				{
-					flag=false;
-					break;
-				}
-			}
-			if(flag==false)
-			{
-				flag=true;
-				break;
-			}
+			number/=primes[j];
+			++cnt;
+		}
+		if(cnt>0)
+		{
+			factors[i].pb(power(primes[j],cnt));
+		}
+		if(number==1)
+		{
+			flag=false;
+			break;
 		}
 	}
+	
 }

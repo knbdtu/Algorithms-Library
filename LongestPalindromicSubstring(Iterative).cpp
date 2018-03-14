@@ -21,9 +21,10 @@ template<typename T>T absll(T X)
         return X;
 }
 
-vector<vector<bool> > dp;
-int LongestPalindromicSubsequence(string str)
+
+int LongestPalindromicSubstring(string str)
 {
+	vector<vector<bool> > dp;
 	dp.resize(str.length()+1,vector<bool>(str.length()+1,false));
 	int N=str.length();
 	int maxlength=-1;

@@ -107,10 +107,10 @@ int main()
 	trie->addWord("pavel");
 	trie->addWord("nitin");
 	trie->addWord("knbdtu");
-	trie->addWord("bitchplease")
+	trie->addWord("bitchplease");
 	trie->addWord("monetization");
 
-	if(trie->find("nitin"))
+	if(trie->find("bitchplease"))
 	{
 		cout<<"found"<<endl;
 	}

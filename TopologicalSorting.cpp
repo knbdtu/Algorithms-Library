@@ -36,6 +36,7 @@ void dfs(int node,stack<int> &S, vector<bool> &visited)
 	}
 	S.push(node);
 }
+
 void TopologicalSorting(int N, int M)
 {
 	vector<bool> visited(M, false);

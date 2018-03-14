@@ -47,7 +47,7 @@ class SegmentTree
 		SegmentTree(LL A[],LL N)
 		{
 			this->N=N;
-			tree=new node[4*getSize(N)+1];
+			tree=new node[2*getSize(N)+1];
 			build(A,1,0,N-1);
 		}
 		
